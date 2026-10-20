@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, Arial, sans-serif;
+  color: #f8fafc;
+  background: #0b1020;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #0f172a;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.card {
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  background: #fff;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.05);
+}
+
+.btn-primary,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  padding: 0.7rem 1.1rem;
+  font-weight: 600;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.btn-primary {
+  border: 1px solid #0d9488;
+  background: #0d9488;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #0f766e;
+}
+
+.btn-outline {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #334155;
+}
+
+.btn-outline:hover {
+  border-color: #0d9488;
+  color: #0d9488;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  background: transparent;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.theme-toggle:hover {
+  border-color: #0d9488;
+  color: #0d9488;
+}
+
+.dark-theme body,
+.dark-theme .app-shell {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.dark-theme .site-nav,
+.dark-theme .site-footer,
+.dark-theme .card,
+.dark-theme .rounded-2xl.bg-white,
+.dark-theme .rounded-3xl.bg-slate-900 {
+  background-color: #172033;
+  border-color: #334155;
+}
+
+.dark-theme .text-slate-900,
+.dark-theme .text-slate-800,
+.dark-theme .text-slate-700,
+.dark-theme .text-slate-600 {
+  color: #e2e8f0;
+}
+
+.dark-theme .text-slate-500,
+.dark-theme .text-slate-400 {
+  color: #94a3b8;
+}
+
+.dark-theme .bg-slate-50,
+.dark-theme .bg-slate-100 {
+  background-color: #1e293b;
+}
+
+.dark-theme .border-slate-100,
+.dark-theme .border-slate-200 {
+  border-color: #334155;
+}
+
+.dark-theme textarea,
+.dark-theme input {
+  background-color: #0f172a;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+.dark-theme .btn-outline,
+.dark-theme .theme-toggle {
+  border-color: #475569;
+  color: #cbd5e1;
+}
+
+.dark-theme .btn-outline:hover,
+.dark-theme .theme-toggle:hover {
+  border-color: #2dd4bf;
+  color: #5eead4;
+}
+
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #f8fafc;
+  background:
+    radial-gradient(circle at 50% 42%, rgb(13 148 136 / 0.16), transparent 28rem),
+    linear-gradient(135deg, #071522 0%, #0b1020 52%, #101b31 100%);
+  animation: splash-fade-in 500ms ease both;
+}
+
+.splash-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: min(90vw, 32rem);
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.splash-logo-wrap {
+  position: relative;
+  display: grid;
+  width: 9rem;
+  height: 9rem;
+  place-items: center;
+  margin-bottom: 2rem;
+}
+
+.splash-logo {
+  position: relative;
+  z-index: 2;
+  width: 6rem;
+  height: 6rem;
+  filter: drop-shadow(0 0 1.5rem rgb(45 212 191 / 0.3));
+  animation: splash-logo-float 2.4s ease-in-out infinite;
+}
+
+.splash-ring {
+  position: absolute;
+  border: 1px solid rgb(45 212 191 / 0.35);
+  border-radius: 9999px;
+}
+
+.splash-ring-outer {
+  inset: 0;
+  animation: splash-ring-pulse 2.4s ease-out infinite;
+}
+
+.splash-ring-inner {
+  inset: 1rem;
+  border-color: rgb(251 191 36 / 0.3);
+  animation: splash-ring-pulse 2.4s ease-out 500ms infinite;
+}
+
+.splash-brand {
+  animation: splash-content-rise 700ms 150ms ease both;
+}
+
+.splash-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.9rem;
+  color: #5eead4;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.splash-brand h1 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: clamp(2.5rem, 9vw, 4.25rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
+
+.splash-brand h1 span {
+  color: #2dd4bf;
+}
+
+.splash-tagline {
+  margin: 1rem 0 0;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.splash-loader {
+  width: min(17rem, 80vw);
+  margin-top: 3rem;
+  color: #94a3b8;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  animation: splash-content-rise 700ms 350ms ease both;
+}
+
+.splash-loader-track {
+  height: 0.2rem;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: rgb(148 163 184 / 0.2);
+}
+
+.splash-loader-progress {
+  width: 42%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #14b8a6, #fbbf24);
+  animation: splash-loading 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.splash-footer {
+  position: absolute;
+  bottom: 2rem;
+  margin: 0;
+  color: #64748b;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.splash-glow {
+  position: absolute;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.11;
+}
+
+.splash-glow-left {
+  top: 10%;
+  left: -10rem;
+  background: #14b8a6;
+}
+
+.splash-glow-right {
+  right: -10rem;
+  bottom: 5%;
+  background: #6366f1;
+}
+
+@keyframes splash-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes splash-content-rise {
+  from { opacity: 0; transform: translateY(0.75rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes splash-logo-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-0.35rem); }
+}
+
+@keyframes splash-ring-pulse {
+  0% { opacity: 0.1; transform: scale(0.85); }
+  45%, 75% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.16); }
+}
+
+@keyframes splash-loading {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-screen,
+  .splash-brand,
+  .splash-loader,
+  .splash-logo,
+  .splash-ring,
+  .splash-loader-progress {
+    animation: none;
+  }
+}
