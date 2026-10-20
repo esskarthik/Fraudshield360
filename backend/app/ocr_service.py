@@ -3,13 +3,11 @@ import re
 
 from fastapi import HTTPException, UploadFile
 from PIL import Image, UnidentifiedImageError
-import numpy as np
-from rapidocr_onnxruntime import RapidOCR
 
 
 MAX_IMAGE_BYTES = 8 * 1024 * 1024
 ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png", "image/webp", "image/bmp"}
-_ocr_engine = RapidOCR()
+_ocr_engine = None
 
 
 async def extract_text_from_image(upload: UploadFile) -> str:
@@ -31,9 +29,20 @@ async def extract_text_from_image(upload: UploadFile) -> str:
         raise HTTPException(status_code=400, detail="The uploaded file is not a valid image.") from exc
 
     try:
+        global _ocr_engine
+        if _ocr_engine is None:
+            import numpy as np
+            from rapidocr_onnxruntime import RapidOCR
+
+            _ocr_engine = RapidOCR()
         result, _ = _ocr_engine(np.array(image))
         text = " ".join(item[1] for item in result) if result else ""
         text = _normalize_ocr_text(text.strip())
+    except ImportError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="OCR is unavailable in this serverless deployment. Text and URL scanning remain available.",
+        ) from exc
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=422, detail="The screenshot could not be processed.") from exc
 

@@ -30,11 +30,13 @@ app.add_middleware(
 
 
 @app.get("/health", response_model=schemas.HealthResponse, tags=["system"])
+@app.get("/api/health", response_model=schemas.HealthResponse, include_in_schema=False)
 def health():
     return {"status": "ok", "service": "fraudshield360"}
 
 
 @app.post("/scan", response_model=schemas.ScanResponse, tags=["scan"])
+@app.post("/api/scan", response_model=schemas.ScanResponse, include_in_schema=False)
 def scan_message(
     request: schemas.ScanRequest,
     db: Session = Depends(database.get_db),
@@ -76,6 +78,7 @@ def _build_scan_response(text: str, db: Session) -> schemas.ScanResponse:
 
 
 @app.post("/scan/image", response_model=schemas.ImageScanResponse, tags=["scan"])
+@app.post("/api/scan/image", response_model=schemas.ImageScanResponse, include_in_schema=False)
 async def scan_image(
     file: UploadFile = File(...),
     db: Session = Depends(database.get_db),
@@ -86,6 +89,7 @@ async def scan_image(
 
 
 @app.get("/dashboard", response_model=schemas.DashboardStats, tags=["dashboard"])
+@app.get("/api/dashboard", response_model=schemas.DashboardStats, include_in_schema=False)
 def dashboard(db: Session = Depends(database.get_db)):
     return crud.get_dashboard_stats(db)
 
